@@ -13,11 +13,12 @@ func main() {
 		i := i
 		// カウントを増やす
 		wg.Add(1)
-		go func(wg sync.WaitGroup) {
+		// MEMO: ポインタにして渡すと良い
+		go func(wg *sync.WaitGroup) {
 			// カウントを減らす
 			defer wg.Done()
 			log.Println(i)
-		}(wg)
+		}(&wg)
 	}
 	// カウントが0でない限りブロックする
 	wg.Wait()
